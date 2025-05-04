@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet">
+  <title>รายการสินค้า | เล็กเจริญบัวบงกช</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+  
+   /* สไตล์ตะกร้าสินค้า */
+    .cart-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #ff4aba;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .cart-count {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background-color: red;
+      color: white;
+      font-size: 12px;
+      padding: 5px;
+      border-radius: 50%;
+    }
+    .cart-popup {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background-color: white;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 20px;
+      width: 300px;
+      display: none;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .cart-popup h3 {
+      margin-top: 0;
+    }
+    .cart-popup ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .cart-popup ul li {
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-popup button {
+      background-color: #ff4aba;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    .remove-btn {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .item-number {
+      font-size: 0.8em;
+      color: #888;
+      margin-right: 10px;
+    }
+    .total-price {
+      font-weight: bold;
+      margin-top: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo-group">
+      <img src="11.jpg" alt="โลโก้บริษัท" class="logo">
+      <img src="otop4star.png" alt="โลโก้ OTOP 4 ดาว" class="otop-logo">
+    </div>
+    <h1>รายการสินค้า</h1>
+    <a href="index.html">← กลับหน้าหลัก</a>
+  </header>
+
+  <main>
+    <section class="products">
+      <!-- สินค้า 01-10 -->
+      <div class="product">
+        <img src="Lo5.jpg" alt="น้ำมันเกสรดอกบัว ตราบัวบงกช 24 ซีซี [แบบโหล 12 ขวด]">
+        <h3>น้ำมันเกสรดอกบัว ตราบัวบงกช 24 ซีซี [แบบโหล 12 ขวด]</h3>
+        <p>1,920 บาท</p>
+        <button class="add-to-cart" data-name="น้ำมันเกสรดอกบัว ตราบัวบงกช 24 ซีซี [แบบโหล 12 ขวด]" data-price="1920">หยิบใส่ตะกร้า</button>
+      </div>
+      <div class="product">
+        <img src="Lo4.jpg" alt="น้ำมันเกสรดอกบัว ตราบัวบงกช 5 ซีซี (แบบลูกกลิ้ง) [แบบโหล 12 ขวด]">
+        <h3>น้ำมันเกสรดอกบัว ตราบัวบงกช 8 ซีซี (แบบลูกกลิ้ง) [แบบโหล 12 ขวด]</h3>
+        <p>900 บาท</p>
+        <button class="add-to-cart" data-name="น้ำมันเกสรดอกบัว ตราบัวบงกช 5 ซีซี (แบบลูกกลิ้ง) [แบบโหล 12 ขวด]" data-price="900">หยิบใส่ตะกร้า</button>
+      </div>
+      <div class="product">
+        <img src="Lo1.png" alt="ยาหม่องน้ำสมุนไพร ตราไก่ 24 ซีซี [แบบโหล 12 ขวด]">
+        <h3>ยาหม่องน้ำสมุนไพร ตราไก่ 24 ซีซี [แบบโหล 12 ขวด]</h3>
+        <p>1,920 บาท</p>
+        <button class="add-to-cart" data-name="ยาหม่องน้ำสมุนไพร ตราไก่ 24 ซีซี [แบบโหล 12 ขวด]" data-price="1920">หยิบใส่ตะกร้า</button>
+      </div>
+      <div class="product">
+        <img src="Lo3.jpg" alt="ยาหม่องน้ำสมุนไพร ตราไก่ 5 ซีซี (แบบลูกกลิ้ง)[แบบโหล 12 ขวด]">
+        <h3>ยาหม่องน้ำสมุนไพร ตราไก่ 24 ซีซี [แบบโหล 12 ขวด]</h3>
+        <p>900 บาท</p>
+        <button class="add-to-cart" data-name="ยาหม่องน้ำสมุนไพร ตราไก่ 24 ซีซี [แบบโหล 12 ขวด]" data-price="900">หยิบใส่ตะกร้า</button>
+      </div>
+      <div class="product">
+        <img src="Lo2.png" alt="น้ำมันเขียว ตรา ดอกบัวหลวง 24 ซีซี [แบบโหล 12 ขวด]">
+        <h3>น้ำมันเขียว ตรา ดอกบัวหลวง [แบบโหล 12 ขวด]</h3>
+        <p>840 บาท</p>
+        <button class="add-to-cart" data-name="น้ำมันเขียว ตรา ดอกบัวหลวง [แบบโหล 12 ขวด]" data-price="840">หยิบใส่ตะกร้า</button>
+      </div>
+      <div class="product">
+        <img src="Lo2.png" alt="น้ำมันเขียว ตรา ดอกบัวหลวง 5 ซีซี (ลูกกลิ้ง) [แบบโหล 12 ขวด]">
+        <h3>น้ำมันเขียว ตรา ดอกบัวหลวง 5 ซีซี (ลูกกลิ้ง)[แบบโหล 12 ขวด]</h3>
+        <p>840 บาท</p>
+        <button class="add-to-cart" data-name="น้ำมันเขียว ตรา ดอกบัวหลวง 5 ซีซี (ลูกกลิ้ง) [แบบโหล 12 ขวด]" data-price="840">หยิบใส่ตะกร้า</button>
+      </div>
+      <div class="product">
+        <img src="Lo2.png" alt="น้ำมันเขียว ตรา ดอกบัวหลวง 5 ซีซี (แบบจิ๋ว) [แบบโหล 12 ขวด]">
+        <h3>น้ำมันเขียว ตรา ดอกบัวหลวง 5 ซีซี (แบบจิ๋ว)[แบบโหล 12 ขวด]</h3>
+        <p>450 บาท</p>
+        <button class="add-to-cart" data-name="น้ำมันเขียว ตรา ดอกบัวหลวง 5 ซีซี (แบบจิ๋ว) [แบบโหล 12 ขวด]" data-price="450">หยิบใส่ตะกร้า</button>
+      </div>
+      <div class="product">
+        <img src="Lo10.jpg" alt="ยาหม่องขี้ผึ้งขาวเกสรดอกบัว 8 กรัม [แบบโหล 12 ขวด]">
+        <h3>ยาหม่องขี้ผึ้งขาวเกสรดอกบัว 8 กรัม [แบบโหล 12 ขวด]</h3>
+        <p>350 บาท</p>
+        <button class="add-to-cart" data-name="ยาหม่องขี้ผึ้งขาวเกสรดอกบัว 8 กรัม [แบบโหล 12 ขวด]" data-price="350">หยิบใส่ตะกร้า</button>
+      </div>
+      <div class="product">
+        <img src="Lo6.jpg" alt="ยาหม่องขี้ผึ้งขาวเกสรดอกบัว 25 กรัม (แบบตลับ)[แบบโหล 12 ตลับ]">
+        <h3>ยาหม่องขี้ผึ้งขาวเกสรดอกบัว 25 กรัม (แบบตลับ)[แบบโหล 12 ตลับ]</h3>
+        <p>840 บาท</p>
+        <button class="add-to-cart" data-name="ยาหม่องขี้ผึ้งขาวเกสรดอกบัว 25 กรัม (แบบตลับ)[แบบโหล 12 ตลับ]" data-price="840">หยิบใส่ตะกร้า</button>
+      </div>
+      <div class="product">
+        <img src="Lo9.jpg" alt="ยาหม่องขี้ผึ้งขาวเกสรดอกบัว 50 กรัม [แบบโหล 12 ขวด]">
+        <h3>"ยาหม่องขี้ผึ้งขาวเกสรดอกบัว 50 กรัม [แบบโหล 12 ขวด]</h3>
+        <p>900 บาท</p>
+        <button class="add-to-cart" data-name=""ยาหม่องขี้ผึ้งขาวเกสรดอกบัว 50 กรัม [แบบโหล 12 ขวด]"" data-price="900">หยิบใส่ตะกร้า</button>
+      </div>
+      <div class="product">
+        <img src="Lo7.jpg" alt="ยาหม่องขี้ผึ้งขาวเกสรดอกบัว 120 กรัม [แบบโหล 12 ขวด]">
+        <h3>"ยาหม่องขี้ผึ้งขาวเกสรดอกบัว 120 กรัม [แบบโหล 12 ขวด]</h3>
+        <p>1,260 บาท</p>
+        <button class="add-to-cart" data-name=""ยาหม่องขี้ผึ้งขาวเกสรดอกบัว 120 กรัม [แบบโหล 12 ขวด]" data-price="1260">หยิบใส่ตะกร้า</button>
+      </div>
+      <div class="product">
+        <img src="Lo8.jpg" alt="ยาหม่องขี้ผึ้งขาวเกสรดอกบัว 210 กรัม [แบบโหล 12 ขวด]">
+        <h3>"ยาหม่องขี้ผึ้งขาวเกสรดอกบัว 210 กรัม [แบบโหล 12 ขวด]</h3>
+        <p>1,920 บาท</p>
+        <button class="add-to-cart" data-name=""ยาหม่องขี้ผึ้งขาวเกสรดอกบัว 210 กรัม [แบบโหล 12 ขวด]" data-price="1920">หยิบใส่ตะกร้า</button>
+      </div>
+      <p>สนใจสอบถามโปรโมชั่นเพิ่มเติม โทร <a href="tel:0615536235">0615536235</a></p>
+    </section> 
+  </main>
+
+  <footer>
+    <p>© 2025 บริษัท เล็กเจริญบัวบงกช จำกัด</p>
+  </footer>
+
+  <!-- ตะกร้าสินค้าและป๊อปอัพ -->
+  <button class="cart-icon" onclick="toggleCart()">🛒
+    <span class="cart-count" id="cart-count">0</span>
+  </button>
+
+  <div class="cart-popup">
+    <h3>รายการสินค้าในตะกร้า</h3>
+    <ul id="cart-items">
+      <!-- รายการสินค้าในตะกร้าจะแสดงที่นี่ -->
+    </ul>
+    <div class="total-price">
+      <p>ยอดรวม: <span id="total-price">0</span> บาท</p>
+    </div>  
+    <<button onclick="window.location.href='payment.html'" style="
+    background-color: #28a745;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    font-family: 'Sarabun', sans-serif;
+    cursor: pointer;
+">
+    🛒 ไปยังหน้าชำระเงิน
+</button>
+<div class="cart-message">
+  <p>กรุณาแคปหน้าจอหน้าตะกร้านี้ และจำราคาเวลาโอนด้วย !!!</p>
+  <p>หากท่านไม่ทำตาม เราจะถือว่า ออเดอร์ท่านเป็นโมฆะ</p>
+</div>
+
+  <script>
+    
+    const cart = [];
+
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', () => {
+        const productName = button.getAttribute('data-name');
+        const productPrice = button.getAttribute('data-price');
+        
+        cart.push({ name: productName, price: parseInt(productPrice) });
+        updateCart();
+        updateCartCount();
+        updateTotalPrice();
+        Swal.fire({
+          icon: 'success',
+          title: 'สินค้าถูกเพิ่มในตะกร้า',
+          text: `${productName} ราคา ${productPrice} บาท`,
+        });
+      });
+    });
+
+    function updateCart() {
+      const cartItemsContainer = document.getElementById('cart-items');
+      cartItemsContainer.innerHTML = ''; // ลบรายการเก่า
+
+      cart.forEach((item, index) => {
+        const listItem = document.createElement('li');
+
+        // เพิ่มเลขรายการสินค้า
+        const itemNumber = document.createElement('span');
+        itemNumber.classList.add('item-number');
+        itemNumber.textContent = `#${index + 1}`;
+        
+        listItem.appendChild(itemNumber);
+        listItem.appendChild(document.createTextNode(`${item.name} - ${item.price} บาท`));
+
+        const removeButton = document.createElement('button');
+        removeButton.textContent = 'ลบ';
+        removeButton.className = 'remove-btn';
+        removeButton.onclick = () => removeFromCart(index);
+
+        listItem.appendChild(removeButton);
+        cartItemsContainer.appendChild(listItem);
+      });
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);  // ลบสินค้าจากตะกร้า
+      updateCart();  // อัปเดตตะกร้า
+      updateCartCount();
+      updateTotalPrice();
+    }
+
+    function updateCartCount() {
+      const cartCount = document.getElementById('cart-count');
+      cartCount.textContent = cart.length;  // อัปเดตจำนวนสินค้าตะกร้า
+    }
+
+    function updateTotalPrice() {
+      const totalPrice = cart.reduce((total, item) => total + item.price, 0);
+      document.getElementById('total-price').textContent = totalPrice;  // อัปเดตยอดรวม
+    }
+
+    function toggleCart() {
+      const cartPopup = document.querySelector('.cart-popup');
+      cartPopup.style.display = (cartPopup.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'ไม่มีสินค้าในตะกร้า',
+          text: 'กรุณาเลือกสินค้าก่อน',
+        });
+        return;
+      }
+
+      let cartText = 'สินค้าที่คุณเลือก:\n';
+      let totalPrice = 0;
+
+      cart.forEach(item => {
+        cartText += `${item.name} - ${item.price} บาท\n`;
+        totalPrice += item.price;
+      });
+
+      const total = `รวม: ${totalPrice} บาท`;
+
+      Swal.fire({
+        title: 'กรุณากรอกข้อมูลของคุณ',
+        html: `
+          <label for="name">ชื่อ:</label>
+          <input type="text" id="name" placeholder="กรุณากรอกชื่อ" class="swal2-input">
+          <label for="phone">เบอร์โทร:</label>
+          <input type="text" id="phone" placeholder="กรุณากรอกเบอร์โทร" class="swal2-input">
+        `,
+        confirmButtonText: 'ส่งไป LINE',
+        preConfirm: () => {
+          const name = document.getElementById('name').value;
+          const phone = document.getElementById('phone').value;
+
+          if (!name || !phone) {
+            Swal.showValidationMessage('กรุณากรอกชื่อและเบอร์โทร');
+            return false;
+          }
+
+          const message = `
+            สินค้าที่เลือก:
+            ${cartText}
+            ${total}
+
+            ชื่อ: ${name}
+            เบอร์โทร: ${phone}
+          `;
+
+          // ส่งไป LINE
+          const lineLink = `https://line.me/ti/p/YYleJBZpsP?text=${encodeURIComponent(message)}`;
+          window.open(lineLink, '_blank');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

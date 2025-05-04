@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ตะกร้าสินค้า - เล็กเจริญบัวบงกช</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: 'Sarabun', sans-serif;
+      padding: 2rem;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid #ddd;
+    }
+    .checkout-btn {
+      margin-top: 2rem;
+      padding: 1rem;
+      background-color: green;
+      color: white;
+      border: none;
+      width: 100%;
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+    .checkout-btn:hover {
+      background-color: darkgreen;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🛒 ตะกร้าสินค้าของคุณ</h1>
+
+  <div id="cart-items"></div>
+
+  <h2 id="total-price">รวม: 0 บาท</h2>
+
+  <button class="checkout-btn" onclick="checkout()">ชำระเงิน</button>
+
+<script>
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+// แสดงสินค้าทั้งหมดในตะกร้า
+function renderCart() {
+  const cartItems = document.getElementById('cart-items');
+  const totalPrice = document.getElementById('total-price');
+  cartItems.innerHTML = '';
+  
+  let total = 0;
+  cart.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `
+      <span>${item.name}</span>
+      <span>${item.price} บาท</span>
+    `;
+    cartItems.appendChild(div);
+    total += item.price;
+  });
+
+  totalPrice.textContent = `รวม: ${total} บาท`;
+}
+
+// เมื่อกดปุ่มชำระเงิน
+function checkout() {
+  if (cart.length === 0) {
+    alert('ยังไม่มีสินค้าในตะกร้า');
+    return;
+  }
+  let confirmMsg = `คุณยืนยันการสั่งซื้อจำนวน ${cart.length} รายการ รวม ${cart.reduce((sum, item) => sum + item.price, 0)} บาท หรือไม่?`;
+  if (confirm(confirmMsg)) {
+    alert('ขอบคุณที่สั่งซื้อกับเรา! 🧡');
+    localStorage.removeItem('cart'); // ล้างตะกร้า
+    window.location.href = '/'; // กลับไปหน้าแรก
+  }
+}
+
+renderCart();
+</script>
+
+</body>
+</html>

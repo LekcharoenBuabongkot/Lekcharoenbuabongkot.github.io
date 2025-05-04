@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ฟังสปอตโปรโมต</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom right, #d2f0fc, #f7d9f7);
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #333;
+    }
+    .spot {
+      margin: 20px 0;
+    }
+    audio {
+      width: 80%;
+      max-width: 400px;
+    }
+    a.button {
+      display: inline-block;
+      margin-top: 50px;
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background-color 0.3s;
+    }
+    a.button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <h1>ฟังสปอตโปรโมตของเรา</h1>
+
+  <div class="spot">
+    <h2>สปอต 1</h2>
+    <audio controls>
+      <source src="spot2.mp3" type="audio/mpeg">
+      เบราว์เซอร์ของคุณไม่รองรับการเล่นเสียง
+    </audio>
+  </div>
+  <br><br>
+  <a class="button" href="index.html">← กลับไปหน้าหลัก</a>
+
+  <script>
+    // จับทุกตัว audio
+    const audios = document.querySelectorAll('audio');
+
+    audios.forEach(audio => {
+      audio.addEventListener('play', () => {
+        audios.forEach(otherAudio => {
+          if (otherAudio !== audio) {
+            otherAudio.pause(); // ถ้าไม่ใช่ตัวที่เล่นอยู่ ให้หยุด
+            otherAudio.currentTime = 0; // รีเซ็ตกลับไปจุดเริ่มต้น
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

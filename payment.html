@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun&display=swap" rel="stylesheet">
+  <title>หน้าชำระเงิน | เล็กเจริญบัวบงกช</title>
+  <style>
+    body {
+      font-family: 'Sarabun', sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    h2 {
+      text-align: center;
+      color: #d63384;
+    }
+    .qr-code {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .qr-code img {
+      width: 200px;
+    }
+    .form-container {
+      text-align: center;
+    }
+    .form-container input[type="file"] {
+      padding: 10px;
+      margin: 10px;
+    }
+    .submit-btn {
+      background-color: #28a745;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>การชำระเงิน</h1>
+  
+  <div class="qr-code">
+    <h3>กรุณาสแกนคิวอาร์โค้ดเพื่อโอนเงิน</h3>
+    <img src="qr-code.png" alt="QR Code">
+    <p>โอนผ่านบัญชี: 017-0-46350-8 (ธนาคารกรุงไทย)<br>
+    ชื่อบัญชี บริษัท เล็กเจริญบัวบงกช จำกัด<br>
+    <small style="color: red;">* เงินเข้าบัญชีบริษัทเท่านั้น เราถึงจะนับว่าเป็นออเดอร์</small></p>
+  </div>
+
+  <div class="form-container">
+    <h3>กรุณาอัปโหลดสลิปการโอนเงิน</h3>
+    <form id="payment-form" enctype="multipart/form-data">
+      <input type="file" id="slip" name="slip" accept="image/*" required><br>
+      <button type="submit" class="submit-btn">อัปโหลดสลิป</button>
+    </form>
+  </div>
+
+  <div id="response-message" style="text-align: center; margin-top: 20px;"></div>
+
+  <script>
+    
+    document.getElementById("payment-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const slip = document.getElementById("slip").files[0];
+
+      if (slip) {
+        const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
+        if (!allowedTypes.includes(slip.type)) {
+          document.getElementById("response-message").innerHTML = '<p style="color: red;">กรุณาอัปโหลดไฟล์รูปภาพเท่านั้น (JPEG, PNG, GIF)</p>';
+          return;
+        }
+
+        document.getElementById("response-message").innerHTML = '<p style="color: green;">ขอบพระคุณสำหรับการอัปโหลดสลิป! ระบบกำลังตรวจสอบ...</p>';
+
+        // จำลองการตรวจสอบ
+        setTimeout(function () {
+          const success = true;
+
+          if (success) {
+            document.getElementById("response-message").innerHTML = '<p style="color: green;">ขอบพระคุณ! การชำระเงินของคุณได้รับการยืนยันแล้ว</p>';
+            window.location.href = "https://forms.gle/4UqaNSAnGFymdsTx7";
+          } else {
+            document.getElementById("response-message").innerHTML = '<p style="color: red;">เกิดข้อผิดพลาดในการตรวจสอบสลิป กรุณาลองใหม่อีกครั้ง</p>';
+          }
+        }, 2000);
+      }
+    });
+  </script>
+
+</body>
+</html>
